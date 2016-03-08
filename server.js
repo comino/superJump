@@ -7,16 +7,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var config = require('config');
-var mqtt    = require('mqtt');
 
-var client  = mqtt.connect('mqtt://test.mosquitto.org');
-
-
-client.on('connect', function () {
-  console.log("connected mqtt"); 
-  client.publish('/bcx16', JSON.stringify({"score":5}) ) ;
-  console.log( "pub done"); 
-});
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -41,4 +32,3 @@ require('./config/routes')(app, passport);
 app.listen(port);
 console.log('Express app started on port ' + port);
 
-module.exports = client; 

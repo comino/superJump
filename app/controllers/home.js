@@ -1,9 +1,5 @@
+var client = require('client.js'); 
 
-/*!
- * Module dependencies.
- */
-
-var client = require('../../server.js')
 var score = [0,0,0,0,0,0]; 
 var isFallen = [0,0,0,0,0,0]; 
 
@@ -20,13 +16,12 @@ exports.postDevice = function( req, res){
 		client.publish('/bcx16', JSON.stringify({"score":1}) ) ;
 		console.log( "pub POST done");
 	}
-
 	res.json({
          "status": 200,
          msg: "received"
       });
 }; 
-
+	
 exports.postDeviceTest = function( req, res){
 	var ID =  req.params.ID;
 	var data =  req.params.data;
@@ -44,16 +39,16 @@ exports.postKintect= function( req, res){
 	var move = req.params.move;
 	score[ID] = move; 
 
-	if( isFallen[ID] == 1){
+	if( isFallen[ID] ){
 		console.log("we have both!!!"); 
-		client.publish('/bcx16', JSON.stringify({"score":1}) ) ;
+		client.publish('/bcx16', JSON.stringify({"score":score[ID]}) ) ;
 		console.log( "pub POST done");
 	}
 
 	console.log( ) ; 
 	res.json({
          "status": 200,
-         msg: "got data"
+         msg: "got data " + score[ID]
       });
 
 
@@ -74,6 +69,8 @@ exports.getScore = function ( req, res){
 }; 
 
 exports.index = function (req, res) {
+	console.log(req); 
+	console.log(rec); 
   res.render('home/index', {
     title: 'SuperJump'
   });
