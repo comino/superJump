@@ -51,7 +51,18 @@ $(function(){
         var payload = message.payloadString;
         obj = JSON.parse(payload);
         console.log(obj);
-        if (obj.score != 0) {
+        if (obj.score == 0) {
+
+            $('#star1').hide();
+            $('#star2').hide();
+            $('#star3').hide();
+            $('#star4').hide();
+            $('#star5').hide();
+            $('#superfall').hide();
+            $('#score').hide();
+            $('#chant').html("DO IT!!1");
+
+        } else if (obj.score != 0) {
             $('#star1').show();
 
             if (obj.score > 1) {
