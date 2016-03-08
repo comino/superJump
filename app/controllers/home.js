@@ -70,7 +70,7 @@ exports.getScore = function ( req, res){
 
 exports.index = function (req, res) {
 	console.log(req); 
-	console.log(rec); 
+	console.log(res); 
   res.render('home/index', {
     title: 'SuperJump'
   });
