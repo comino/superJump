@@ -17,6 +17,17 @@ exports.postDevice = function( req, res){
       });
 }; 
 
+exports.postDeviceTest = function( req, res){
+	var ID =  req.params.ID;
+	var data =  req.params.data;
+	isFallen[ID] = 1; 
+	res.json({
+         "status": 200,
+         msg: "received" + data
+      });
+}; 
+
+
 exports.postKintect= function( req, res){
 	
 	var ID =  req.params.ID;
