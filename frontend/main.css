@@ -4,8 +4,13 @@
     font-family: 'Open Sans';
     color:#fff;
 }
+
 body {
     background:#000;
+}
+
+#wp {
+    width:800px;
 }
 
 #stars img {
