@@ -7,6 +7,9 @@
 var score = [0,0,0,0,0,0]; 
 var isFallen = [0,0,0,0,0,0]; 
 
+exports.score; 
+exports.isFallen; 
+
 exports.postDevice = function( req, res){
 	var ID =  req.params.ID;
 	//var data =  req.params.data;

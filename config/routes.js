@@ -20,7 +20,6 @@ module.exports = function (app, passport) {
 
   app.get('/data/:ID/:data' ,    home.postDeviceTest);
 
-
   app.post('/fall/:ID/:move',   home.postKintect); 
   app.get( '/fall/:ID/:move',   home.postKintect); 
 
