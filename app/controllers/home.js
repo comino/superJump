@@ -11,7 +11,7 @@ exports.isFallen;
 exports.postDevice = function( req, res){ // THIS IS KINECT 
 	var ID =  req.params.ID;
 	var newScore =  req.params.score;
-	isFallen[ID] = 1; 
+	isFallen[ID] = true; 
 
 	if( newScore > 8){
 		newScore = 5; 
@@ -25,11 +25,15 @@ exports.postDevice = function( req, res){ // THIS IS KINECT
 		newScore = 1; 
 	}
 
+	score2[ID] = newScore; 
+	if( isFallen[ID] && score[ID]){
 		console.log("we have both!!!");
-
-		var realScore = Math.round( (score[1] + score2[1]) ) ; 
+		var realScore = Math.round( score[ID] ) ; 
 		client.publish('/bcx16', JSON.stringify({"score":realScore} ) ) ;
 		console.log( "pub POST done");
+		isFallen[ID] = 0; 
+		score[ID] = 0; 
+	}
 
 	res.json({
          "status": 200,
@@ -54,13 +58,16 @@ exports.postKintect= function( req, res){ // THIS IS DEVICE
 	
 	var ID =  req.params.ID;
 	var move = req.params.move;
-	score2[ID] = move; 
+	score[ID] = move; 
 
 	console.log("we have both!!!"); 
-	var realScore = Math.round( (score[1] + score2[1]) ) ; 
-	client.publish('/bcx16', JSON.stringify({"score":realScore} ) ) ;
-	console.log( "pub POST done");
-
+	if( isFallen[ID] && score[ID]){
+		var realScore = Math.round(score[ID]); 
+		client.publish('/bcx16', JSON.stringify({"score":realScore} ) ) ;
+		console.log( "pub POST done");
+		isFallen[ID] = 0; 
+		score[ID] = 0;  
+	}
 
 	console.log( ) ; 
 	res.json({
