@@ -1,21 +1,36 @@
 var client = require('client.js'); 
 
 var score = [0,0,0,0,0,0]; 
+var score2 = [0,0,0,0,0,0]; 
+
 var isFallen = [0,0,0,0,0,0]; 
 
 exports.score; 
 exports.isFallen; 
 
-exports.postDevice = function( req, res){
+exports.postDevice = function( req, res){ // THIS IS KINECT 
 	var ID =  req.params.ID;
-	var score =  req.params.score;
+	var newScore =  req.params.score;
 	isFallen[ID] = 1; 
 
-	if( score[ID] == 1){
-		console.log("we have both!!!");
-		client.publish('/bcx16', JSON.stringify({"score":score}) ) ;
-		console.log( "pub POST done");
+	if( newScore > 8){
+		newScore = 5; 
+	}else if( newScore > 6){
+		newScore = 4; 
+	}else if( newScore > 4){
+		newScore = 3; 
+	}else if( newScore > 2){
+		newScore = 2; 
+	}else{
+		newScore = 1; 
 	}
+
+		console.log("we have both!!!");
+
+		var realScore = Math.round( (score[1] + score2[1]) ) ; 
+		client.publish('/bcx16', JSON.stringify({"score":realScore} ) ) ;
+		console.log( "pub POST done");
+
 	res.json({
          "status": 200,
          msg: "received"
@@ -35,17 +50,17 @@ exports.postDeviceTest = function( req, res){
 }; 
 
 
-exports.postKintect= function( req, res){
+exports.postKintect= function( req, res){ // THIS IS DEVICE
 	
 	var ID =  req.params.ID;
 	var move = req.params.move;
-	score[ID] = move; 
+	score2[ID] = move; 
 
-	if( isFallen[ID] ){
-		console.log("we have both!!!"); 
-		client.publish('/bcx16', JSON.stringify({"score":score[ID]}) ) ;
-		console.log( "pub POST done");
-	}
+	console.log("we have both!!!"); 
+	var realScore = Math.round( (score[1] + score2[1]) ) ; 
+	client.publish('/bcx16', JSON.stringify({"score":realScore} ) ) ;
+	console.log( "pub POST done");
+
 
 	console.log( ) ; 
 	res.json({
