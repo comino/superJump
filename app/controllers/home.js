@@ -8,12 +8,12 @@ exports.isFallen;
 
 exports.postDevice = function( req, res){
 	var ID =  req.params.ID;
-	//var data =  req.params.data;
+	var score =  req.params.score;
 	isFallen[ID] = 1; 
 
 	if( score[ID] == 1){
 		console.log("we have both!!!");
-		client.publish('/bcx16', JSON.stringify({"score":1}) ) ;
+		client.publish('/bcx16', JSON.stringify({"score":score}) ) ;
 		console.log( "pub POST done");
 	}
 	res.json({
@@ -25,6 +25,8 @@ exports.postDevice = function( req, res){
 exports.postDeviceTest = function( req, res){
 	var ID =  req.params.ID;
 	var data =  req.params.data;
+
+
 	isFallen[ID] = 1; 
 	res.json({
          "status": 200,

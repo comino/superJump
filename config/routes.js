@@ -15,8 +15,8 @@ module.exports = function (app, passport) {
 
   app.get('/clear',             home.clear); 
 
-  app.post('/data/:ID',         home.postDevice); 
-  app.get('/data/:ID',          home.postDevice);
+  app.post('/data/:ID/:score',         home.postDevice); 
+  app.get('/data/:ID/:score',          home.postDevice);
 
   app.get('/data/:ID/:data' ,    home.postDeviceTest);
 
